@@ -1,0 +1,4 @@
+rootProject.name = 'parser'
+
+include ':pipeline_descriptor'
+project(':pipeline_descriptor').projectDir = new File(settingsDir, '../dsl_pipeline_descriptor')

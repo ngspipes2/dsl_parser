@@ -1,0 +1,14 @@
+Repositories [
+  PipelineRepo repo {
+    location: "https://location"
+  }
+]
+
+Outputs : { }
+
+Steps [
+  Step step1 {
+    exec: repo[tool][command]
+    execution_context: "context"
+  }
+]

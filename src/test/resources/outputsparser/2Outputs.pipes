@@ -1,0 +1,17 @@
+Repositories [
+  ToolRepository repo {
+    location: "https://location"
+  }
+]
+
+Outputs : {
+    output1 : step1[outputName]
+    output2 : step2[outputName]
+}
+
+Steps [
+  Step step1 {
+    exec: repo[tool][command]
+    execution_context: "context"
+  }
+]

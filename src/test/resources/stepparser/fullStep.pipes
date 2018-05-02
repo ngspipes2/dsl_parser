@@ -1,0 +1,42 @@
+Repositories [
+  ToolRepository tRepo {
+    location: "https://location"
+  }
+
+  PipelineRepository pRepo {
+      location: "https://location"
+    }
+]
+
+Outputs : {
+    output1 : step1[outputName]
+}
+
+var = "varValue"
+
+Steps [
+  Step step0 {
+    exec: tRepo[tool][command]
+    execution_context : "Docker"
+  }
+
+  Step step1 {
+    exec: pRepo[pipeline]
+  }
+
+  Step step2 {
+    exec: tRepo[tool][command]
+    inputs: {
+        string: "str"
+        number: 1
+        variable: var
+        param: params.param
+        ch1: step0[out]
+        ch2: step1[out]
+    }
+    spread: {
+        inputs_to_spread: [ch1, ch2]
+        strategy: one_to_one(ch1, ch2)
+    }
+  }
+]
