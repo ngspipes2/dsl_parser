@@ -26,7 +26,7 @@ public class PipelineParser {
         Collection<IRepositoryDescriptor> repositories = parseRepositories(context);
         Collection<IStepDescriptor> steps = parseSteps(context);
 
-        return new PipelineDescriptor(null, null, parameters, outputs, repositories, steps);
+        return new PipelineDescriptor(null, null, null, null, null, null, parameters, outputs, repositories, steps);
     }
 
     private Collection<IOutputDescriptor> parseOutputs(PipesParser.RootContext context) {
