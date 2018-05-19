@@ -13,6 +13,8 @@ Outputs : {
 }
 
 var = "varValue"
+params.a = 2
+params.b = "b"
 
 Steps [
   Step step0 {

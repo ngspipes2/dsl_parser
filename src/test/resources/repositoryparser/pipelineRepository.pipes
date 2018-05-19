@@ -1,0 +1,25 @@
+var = "value"
+
+Repositories [
+  PipelineRepository repo {
+      location: "https://location"
+      config : {
+        string: "propertyValue1"
+        number: 2
+        variable: var
+        parameter: params.param
+      }
+    }
+]
+
+Outputs : {
+    output1 : step1[outputName]
+    output2 : step2[outputName]
+}
+
+Steps [
+  Step step1 {
+    exec: repo[tool][command]
+    execution_context: "context"
+  }
+]
