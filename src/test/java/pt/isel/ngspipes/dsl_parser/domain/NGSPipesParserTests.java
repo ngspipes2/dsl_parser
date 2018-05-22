@@ -3,7 +3,6 @@ package pt.isel.ngspipes.dsl_parser.domain;
 import org.junit.Test;
 import pt.isel.ngspipes.dsl_parser.transversal.IO;
 import pt.isel.ngspipes.dsl_parser.transversal.ParserException;
-import pt.isel.ngspipes.pipeline_descriptor.IPipelineDescriptor;
 
 import java.io.IOException;
 
@@ -24,36 +23,6 @@ public class NGSPipesParserTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void nullPipelineDescriptionTest() throws ParserException, IOException {
-
-
-
-
-
-
-
-
-
-        IPipelineDescriptor pipelineDescriptor = parser.getFromString(readFile("stepparser/fullStep.pipes"));
-        String pipelineDescription = parser.getAsString(pipelineDescriptor);
-        IO.write(pipelineDescription, "D:\\Desktop\\fullStepTest.pipes");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         parser.getFromString(null);
     }
 

@@ -1,3 +1,10 @@
+Properties : {
+    author: "A"
+    description: "B"
+    version: "C"
+    documentation: ["D","E"]
+}
+
 Repositories : [
   ToolRepository tRepo : {
     location: "https://location"

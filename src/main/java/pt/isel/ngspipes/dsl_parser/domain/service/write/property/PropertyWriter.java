@@ -43,6 +43,8 @@ public class PropertyWriter {
             sb.append("]\n");
         }
 
+        sb.append("}");
+
         return sb.toString();
     }
 
