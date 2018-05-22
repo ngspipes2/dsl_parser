@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
-public class OutputParserTests {
+public class OutputReaderTests {
 
     private static String readFile(String path) throws IOException {
         path = ClassLoader.getSystemResource(path).getPath();
@@ -48,7 +48,7 @@ public class OutputParserTests {
 
     @Test
     public void outputsContextWithOneElementTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputsparser/1output.pipes"));
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputparser/1output.pipes"));
 
         Collection<IOutputDescriptor> outputDescriptors = outputService.parse(root.outputs().output());
 
@@ -63,7 +63,7 @@ public class OutputParserTests {
 
     @Test
     public void regularOutputContextTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputsparser/1output.pipes"));
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputparser/1output.pipes"));
 
         IOutputDescriptor outputDescriptor = outputService.parse(root.outputs().output(0));
 

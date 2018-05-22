@@ -1,9 +1,9 @@
-Repositories [
-  ToolRepository tRepo {
+Repositories : [
+  ToolRepository tRepo : {
     location: "https://location"
   }
 
-  PipelineRepository pRepo {
+  PipelineRepository pRepo : {
       location: "https://location"
     }
 ]
@@ -16,17 +16,17 @@ var = "varValue"
 params.a = 2
 params.b = "b"
 
-Steps [
-  Step step0 {
+Steps : [
+  Step step0 : {
     exec: tRepo[tool][command]
     execution_context : "Docker"
   }
 
-  Step step1 {
+  Step step1 : {
     exec: pRepo[pipeline]
   }
 
-  Step step2 {
+  Step step2 : {
     exec: tRepo[tool][command]
     inputs: {
         string: "str"

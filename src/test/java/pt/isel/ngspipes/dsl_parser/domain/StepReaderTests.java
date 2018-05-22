@@ -21,7 +21,7 @@ import java.util.Collection;
 
 import static junit.framework.TestCase.*;
 
-public class StepParserTests {
+public class StepReaderTests {
 
     private static String readFile(String path) throws IOException {
         path = ClassLoader.getSystemResource(path).getPath();

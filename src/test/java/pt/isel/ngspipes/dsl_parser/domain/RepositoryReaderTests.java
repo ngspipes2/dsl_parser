@@ -18,7 +18,7 @@ import java.util.LinkedList;
 
 import static junit.framework.TestCase.*;
 
-public class RepositoryParserTests {
+public class RepositoryReaderTests {
 
     private static String readFile(String path) throws IOException {
         path = ClassLoader.getSystemResource(path).getPath();

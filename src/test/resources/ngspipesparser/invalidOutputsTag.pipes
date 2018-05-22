@@ -1,13 +1,13 @@
-Repositories [
-  ToolRepository repo {
+Repositories : [
+  ToolRepository repo : {
     location: "https://location"
   }
 ]
 
 Outs : { }
 
-Steps [
-  Step step1 {
+Steps : [
+  Step step1 : {
     exec: repo[tool][command]
     execution_context: "context"
   }

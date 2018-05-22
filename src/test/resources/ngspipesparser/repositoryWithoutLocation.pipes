@@ -1,13 +1,13 @@
-Repositories [
-  PipelineRepository repositoryId {
+Repositories : [
+  PipelineRepository repositoryId : {
 
   }
 ]
 
 Outputs : { }
 
-Steps [
-  Step step1 {
+Steps : [
+  Step step1 : {
     exec: repo[tool][command]
     execution_context: "context"
   }

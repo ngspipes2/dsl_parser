@@ -1,5 +1,5 @@
-Repositories [
-  PipelineRepository repo {
+Repositories : [
+  PipelineRepository repo : {
     location: "https://location"
     conf : {}
   }
@@ -7,8 +7,8 @@ Repositories [
 
 Outputs : { }
 
-Steps [
-  Step step1 {
+Steps : [
+  Step step1 : {
     exec: repo[tool][command]
     execution_context: "context"
   }

@@ -87,6 +87,56 @@ public interface PipesListener extends ParseTreeListener {
 	 */
 	void exitVariableValue(PipesParser.VariableValueContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PipesParser#properties}.
+	 * @param ctx the parse tree
+	 */
+	void enterProperties(PipesParser.PropertiesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PipesParser#properties}.
+	 * @param ctx the parse tree
+	 */
+	void exitProperties(PipesParser.PropertiesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PipesParser#authorProperty}.
+	 * @param ctx the parse tree
+	 */
+	void enterAuthorProperty(PipesParser.AuthorPropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PipesParser#authorProperty}.
+	 * @param ctx the parse tree
+	 */
+	void exitAuthorProperty(PipesParser.AuthorPropertyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PipesParser#descriptionProperty}.
+	 * @param ctx the parse tree
+	 */
+	void enterDescriptionProperty(PipesParser.DescriptionPropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PipesParser#descriptionProperty}.
+	 * @param ctx the parse tree
+	 */
+	void exitDescriptionProperty(PipesParser.DescriptionPropertyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PipesParser#versionProperty}.
+	 * @param ctx the parse tree
+	 */
+	void enterVersionProperty(PipesParser.VersionPropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PipesParser#versionProperty}.
+	 * @param ctx the parse tree
+	 */
+	void exitVersionProperty(PipesParser.VersionPropertyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PipesParser#documentationProperty}.
+	 * @param ctx the parse tree
+	 */
+	void enterDocumentationProperty(PipesParser.DocumentationPropertyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PipesParser#documentationProperty}.
+	 * @param ctx the parse tree
+	 */
+	void exitDocumentationProperty(PipesParser.DocumentationPropertyContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PipesParser#repositories}.
 	 * @param ctx the parse tree
 	 */

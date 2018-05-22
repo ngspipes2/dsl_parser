@@ -12,7 +12,7 @@ import java.util.Collection;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class ParameterParserTests {
+public class ParameterReaderTests {
 
     private static String readFile(String path) throws IOException {
         path = ClassLoader.getSystemResource(path).getPath();

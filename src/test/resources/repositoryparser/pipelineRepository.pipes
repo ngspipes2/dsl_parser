@@ -1,7 +1,7 @@
 var = "value"
 
-Repositories [
-  PipelineRepository repo {
+Repositories : [
+  PipelineRepository repo : {
       location: "https://location"
       config : {
         string: "propertyValue1"
@@ -17,8 +17,8 @@ Outputs : {
     output2 : step2[outputName]
 }
 
-Steps [
-  Step step1 {
+Steps : [
+  Step step1 : {
     exec: repo[tool][command]
     execution_context: "context"
   }

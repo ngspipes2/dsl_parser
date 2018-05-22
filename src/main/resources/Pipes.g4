@@ -1,6 +1,6 @@
 grammar Pipes;
 
-root: valueDeclaration* repositories valueDeclaration* outputs valueDeclaration* steps EOF;
+root: valueDeclaration* properties? valueDeclaration* repositories valueDeclaration* outputs? valueDeclaration* steps EOF;
 
 valueDeclaration: parameterDeclaration | variableDeclaration;
 parameterDeclaration: parameterName '=' parameterValue;
@@ -10,10 +10,16 @@ variableDeclaration: variableName '=' variableValue;
 variableName: ID;
 variableValue: directValue;
 
-repositories: 'Repositories' '[' repository (repository)* ']';
+properties: 'Properties' ':' '{' authorProperty? descriptionProperty? versionProperty? documentationProperty? '}';
+authorProperty: 'author' ':' STRING;
+descriptionProperty: 'description' ':' STRING;
+versionProperty: 'version' ':' STRING;
+documentationProperty: 'documentation' ':' '[' STRING? (',' STRING)* ']';
+
+repositories: 'Repositories' ':' '[' repository (repository)* ']';
 repository: toolRepository | pipelineRepository;
-toolRepository: 'ToolRepository' repositoryId '{' locationProperty configProperty? '}';
-pipelineRepository: 'PipelineRepository' repositoryId '{' locationProperty configProperty? '}';
+toolRepository: 'ToolRepository' repositoryId ':' '{' locationProperty configProperty? '}';
+pipelineRepository: 'PipelineRepository' repositoryId ':' '{' locationProperty configProperty? '}';
 repositoryId: ID;
 locationProperty: 'location' ':' locationValue;
 locationValue: STRING;
@@ -28,8 +34,8 @@ outputId: ID;
 outputValue: stepId '[' outputName ']';
 outputName: ID;
 
-steps: 'Steps' '[' step (step)* ']';
-step: 'Step' stepId '{' execProperty executionContextProperty? inputsProperty? spreadProperty? '}';
+steps: 'Steps' ':' '[' step (step)* ']';
+step: 'Step' stepId ':' '{' execProperty executionContextProperty? inputsProperty? spreadProperty? '}';
 stepId: ID;
 execProperty: 'exec' ':' (commandReference | pipelineReference);
 commandReference: repositoryId '[' toolName ']' '[' commandName ']';

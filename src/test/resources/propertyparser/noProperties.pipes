@@ -1,6 +1,8 @@
-Repositories : [ ]
-
-Outputs : { }
+Repositories : [
+  ToolRepository repo : {
+    location: "https://location"
+  }
+]
 
 Steps : [
   Step step1 : {
