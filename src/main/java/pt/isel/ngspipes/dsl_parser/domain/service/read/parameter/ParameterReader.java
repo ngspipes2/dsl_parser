@@ -60,8 +60,11 @@ public class ParameterReader {
     private Collection<IParameterDescriptor> parseNotDeclaredParameters(PipesParser.RootContext context) throws ParserException {
         Collection<IParameterDescriptor> parameters = new LinkedList<>();
 
-        parameters.addAll(parseNotDeclaredRepositoryParameters(context));
-        parameters.addAll(parseNotDeclaredStepsParameters(context));
+        if(context.repositories() != null)
+            parameters.addAll(parseNotDeclaredRepositoryParameters(context));
+
+        if(context.steps() != null)
+            parameters.addAll(parseNotDeclaredStepsParameters(context));
 
         return parameters;
     }

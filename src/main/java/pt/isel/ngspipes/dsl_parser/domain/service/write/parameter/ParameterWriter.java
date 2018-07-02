@@ -8,7 +8,7 @@ public class ParameterWriter {
 
     public String getAsString(Collection<IParameterDescriptor> parameters) {
         if(parameters == null)
-            throw new IllegalArgumentException("Parameters cannot be null!");
+            return "";
 
         StringBuilder sb = new StringBuilder();
 
@@ -29,7 +29,7 @@ public class ParameterWriter {
         else
             value = parameter.getDefaultValue().toString();
 
-        return parameter.getName() + " = " + value;
+        return "params." + parameter.getName() + " = " + value;
     }
 
 }

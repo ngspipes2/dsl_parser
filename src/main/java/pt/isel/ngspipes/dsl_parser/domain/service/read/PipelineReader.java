@@ -15,8 +15,9 @@ import pt.isel.ngspipes.pipeline_descriptor.repository.IRepositoryDescriptor;
 import pt.isel.ngspipes.pipeline_descriptor.step.IStepDescriptor;
 
 import java.util.Collection;
+import java.util.Map;
 
-public class PipelineReader {
+public class  PipelineReader {
 
     private PropertyReader propertyReader = new PropertyReader();
     private ParameterReader parameterReader = new ParameterReader();
@@ -40,12 +41,12 @@ public class PipelineReader {
     }
 
     private void loadProperties(PipelineDescriptor pipeline, PipesParser.RootContext context) {
-        PipesParser.PropertiesContext properties = context.properties();
+        Map<String, Object> properties = propertyReader.parse(context.properties());
 
-        pipeline.setAuthor(propertyReader.parseAuthor(properties));
-        pipeline.setDescription(propertyReader.parseDescription(properties));
-        pipeline.setVersion(propertyReader.parseVersion(properties));
-        pipeline.setDocumentation(propertyReader.parseDocumentation(properties));
+        pipeline.setAuthor((String)properties.get("author"));
+        pipeline.setDescription((String)properties.get("description"));
+        pipeline.setVersion((String)properties.get("version"));
+        pipeline.setDocumentation((Collection<String>) properties.get("documentation"));
     }
 
     private Collection<IOutputDescriptor> parseOutputs(PipesParser.RootContext context) {

@@ -13,16 +13,13 @@ import java.util.Map;
 public class RepositoryWriter {
 
     public String getAsString(Collection<IRepositoryDescriptor> repositories) throws ParserException {
-        if(repositories == null)
-            throw new IllegalArgumentException("Repositories cannot be null!");
-
         String repositoriesContent = getRepositoriesContent(repositories);
 
         return "Repositories : " + repositoriesContent;
     }
 
     private String getRepositoriesContent(Collection<IRepositoryDescriptor> repositories) throws ParserException {
-        if(repositories.isEmpty())
+        if(repositories == null || repositories.isEmpty())
             return "[ ]";
 
         StringBuilder sb = new StringBuilder("[\n");
@@ -62,8 +59,10 @@ public class RepositoryWriter {
     private String getRepositoryContent(IRepositoryDescriptor repository) throws ParserException {
         StringBuilder sb = new StringBuilder("{\n");
 
-        String location = ParserUtils.embrace(repository.getLocation());
-        sb.append("\tlocation : ").append(location).append("\n");
+        if(repository.getLocation() != null) {
+            String location = ParserUtils.embrace(repository.getLocation());
+            sb.append("\tlocation : ").append(location).append("\n");
+        }
 
         String configContent = getConfigContent(repository.getConfiguration());
         configContent = ParserUtils.indent(configContent,1).trim();
@@ -75,7 +74,7 @@ public class RepositoryWriter {
     }
 
     private String getConfigContent(Map<String, IValueDescriptor> configuration) throws ParserException {
-        if(configuration.isEmpty())
+        if(configuration == null || configuration.isEmpty())
             return "{ }";
 
         StringBuilder sb = new StringBuilder("{\n");

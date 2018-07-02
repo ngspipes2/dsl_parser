@@ -6,14 +6,3 @@ Repositories : [
    }
   }
 ]
-
-Outputs : {
-    output1 : step1[outputName]
-}
-
-Steps : [
-  Step step1 : {
-    exec: repo[tool][command]
-    execution_context: "context"
-  }
-]

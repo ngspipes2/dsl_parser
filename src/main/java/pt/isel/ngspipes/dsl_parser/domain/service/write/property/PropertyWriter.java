@@ -9,16 +9,14 @@ public class PropertyWriter {
         if(pipeline == null)
             throw new IllegalArgumentException("Pipeline cannot be null!");
 
-        String propertiesContent = getPropertiesContent(pipeline);
-
-        return "Properties : " + propertiesContent;
+        return "Properties : " + getPropertiesContent(pipeline);
     }
 
     private String getPropertiesContent(IPipelineDescriptor pipeline) {
         if( pipeline.getAuthor() == null &&
             pipeline.getDescription() == null &&
             pipeline.getVersion() == null &&
-            (pipeline.getDocumentation() == null || (pipeline.getDocumentation() != null && pipeline.getDocumentation().isEmpty())))
+            pipeline.getDocumentation() == null)
             return "{ }";
 
         StringBuilder sb = new StringBuilder("{\n");
@@ -38,7 +36,8 @@ public class PropertyWriter {
             for(String doc : pipeline.getDocumentation())
                 sb.append(ParserUtils.embrace(doc)).append(", ");
 
-            sb.replace(sb.length()-", ".length(), sb.length(), "");
+            if(!pipeline.getDescription().isEmpty())
+                sb.replace(sb.length()-", ".length(), sb.length(), "");
 
             sb.append("]\n");
         }

@@ -1,0 +1,6 @@
+Properties : {
+    author: "A"
+    description: "B"
+    version: "C"
+    documentation: ["D","E"]
+}

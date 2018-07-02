@@ -24,7 +24,20 @@ import java.util.LinkedList;
 
 public class StepReader {
 
+    public Collection<IStepDescriptor> parse(PipesParser.StepsContext stepsContext, PipesParser.RootContext context) throws ParserException {
+        if(stepsContext == null)
+            return new LinkedList<>();
+
+        return parse(stepsContext.step(), context);
+    }
+
     public Collection<IStepDescriptor> parse(Collection<PipesParser.StepContext> stepsContext, PipesParser.RootContext context) throws ParserException {
+        if(context == null)
+            throw new IllegalArgumentException("Context cannot be null!");
+
+        if(stepsContext == null)
+            return new LinkedList<>();
+
         Collection<IStepDescriptor> stepsDescriptor = new LinkedList<>();
 
         for(PipesParser.StepContext stepContext : stepsContext)
@@ -44,6 +57,9 @@ public class StepReader {
     }
 
     private IExecDescriptor parseExec(PipesParser.RootContext context, PipesParser.ExecPropertyContext execPropertyContext) throws ParserException {
+        if(execPropertyContext == null)
+            return null;
+
         if(execPropertyContext.commandReference() != null)
             return parseExecCommand(context, execPropertyContext.commandReference());
 
@@ -96,10 +112,10 @@ public class StepReader {
     }
 
     private Collection<IInputDescriptor> parseInputs(PipesParser.RootContext context, PipesParser.InputsPropertyContext inputsPropertyContext) throws ParserException {
-        Collection<IInputDescriptor> inputs = new LinkedList<>();
-
         if(inputsPropertyContext == null)
-            return inputs;
+            return new LinkedList<>();
+
+        Collection<IInputDescriptor> inputs = new LinkedList<>();
 
         for(PipesParser.InputPropertyContext input : inputsPropertyContext.inputProperty())
             inputs.add(parseInput(context, input));
@@ -159,6 +175,9 @@ public class StepReader {
     }
 
     private Collection<String> parseInputsToSpread(PipesParser.RootContext context, PipesParser.SpreadInputsToSpreadPropertyContext spreadInputsToSpreadPropertyContext) {
+        if(spreadInputsToSpreadPropertyContext == null)
+            return new LinkedList<>();
+
         Collection<String> inputsToSpread = new LinkedList<>();
 
         for(PipesParser.InputNameContext inputNameContext : spreadInputsToSpreadPropertyContext.inputName())

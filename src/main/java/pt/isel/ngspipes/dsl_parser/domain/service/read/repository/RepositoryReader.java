@@ -15,9 +15,19 @@ import java.util.Map;
 
 public class RepositoryReader {
 
+    public Collection<IRepositoryDescriptor> parse(PipesParser.RepositoriesContext repositoriesContext, PipesParser.RootContext context) throws ParserException {
+        if(repositoriesContext == null)
+            return new LinkedList<>();
+
+        return parse(repositoriesContext.repository(), context);
+    }
+
     public Collection<IRepositoryDescriptor> parse(Collection<PipesParser.RepositoryContext> repositoriesContext, PipesParser.RootContext context) throws ParserException {
-        if(repositoriesContext == null || context == null)
-            throw new IllegalArgumentException("Neither repositoriesContext nor context can be null!");
+        if(context == null)
+            throw new IllegalArgumentException("Context cannot be null!");
+
+        if(repositoriesContext == null)
+            return new LinkedList<>();
 
         Collection<IRepositoryDescriptor> repositoriesDescriptor = new LinkedList<>();
 
@@ -42,8 +52,11 @@ public class RepositoryReader {
 
     private IToolRepositoryDescriptor parseToolRepository(PipesParser.RootContext context, PipesParser.ToolRepositoryContext toolRepositoryContext) throws ParserException {
         String id = toolRepositoryContext.repositoryId().ID().getText();
-        String location = toolRepositoryContext.locationProperty().locationValue().STRING().getText();
-        location = ParserUtils.trimQuotes(location);
+        String location = null;
+
+        if(toolRepositoryContext.locationProperty() != null)
+            location = ParserUtils.trimQuotes(toolRepositoryContext.locationProperty().locationValue().STRING().getText());
+
         Map<String, IValueDescriptor> config = parseConfig(context, toolRepositoryContext.configProperty());
 
         return new ToolRepositoryDescriptor(id, location, config);
@@ -51,18 +64,21 @@ public class RepositoryReader {
 
     private IPipelineRepositoryDescriptor parsePipelineRepository(PipesParser.RootContext context, PipesParser.PipelineRepositoryContext pipelineRepositoryContext) throws ParserException {
         String id = pipelineRepositoryContext.repositoryId().ID().getText();
-        String location = pipelineRepositoryContext.locationProperty().locationValue().STRING().getText();
-        location = ParserUtils.trimQuotes(location);
+        String location = null;
+
+        if(pipelineRepositoryContext.locationProperty() != null)
+            location = ParserUtils.trimQuotes(pipelineRepositoryContext.locationProperty().locationValue().STRING().getText());
+
         Map<String, IValueDescriptor> config = parseConfig(context, pipelineRepositoryContext.configProperty());
 
         return new PipelineRepositoryDescriptor(id, location, config);
     }
 
     private Map<String, IValueDescriptor> parseConfig(PipesParser.RootContext context, PipesParser.ConfigPropertyContext configPropertyContext) throws ParserException {
-        Map<String, IValueDescriptor> config = new HashMap<>();
-
         if(configPropertyContext == null)
-            return config;
+            return new HashMap<>();
+
+        Map<String, IValueDescriptor> config = new HashMap<>();
 
         String configName;
         IValueDescriptor configValue;

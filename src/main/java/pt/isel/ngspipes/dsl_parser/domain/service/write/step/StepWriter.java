@@ -21,16 +21,12 @@ import java.util.Collection;
 public class StepWriter {
 
     public String getAsString(Collection<IStepDescriptor> steps) throws ParserException {
-        if(steps == null)
-            throw new IllegalArgumentException("Steps cannot be null!");
-
         String stepsContent = getStepsContent(steps);
-
         return "Steps : " + stepsContent;
     }
 
     private String getStepsContent(Collection<IStepDescriptor> steps) throws ParserException {
-        if(steps == null)
+        if(steps == null || steps.isEmpty())
             return "[ ]";
 
         StringBuilder sb = new StringBuilder("[\n");
@@ -60,15 +56,17 @@ public class StepWriter {
     private String getStepContent(IStepDescriptor step) throws ParserException {
         StringBuilder sb = new StringBuilder("{\n");
 
-        String exec = getExecContent(step.getExec());
-        sb.append("\texec : ").append(exec).append("\n");
+        if(step.getExec() != null) {
+            String exec = getExecContent(step.getExec());
+            sb.append("\texec : ").append(exec).append("\n");
+        }
 
         if(step.getExecutionContext() != null) {
             String executionContext = getExecutionContextContent(step.getExecutionContext());
             sb.append("\texecution_context : ").append(executionContext).append("\n");
         }
 
-        if(!step.getInputs().isEmpty()) {
+        if(step.getInputs() != null) {
             String inputs = getInputsContent(step.getInputs());
             inputs = ParserUtils.indent(inputs, 1).trim();
             sb.append("\tinputs : ").append(inputs).append("\n");
@@ -158,6 +156,7 @@ public class StepWriter {
     private String getSpreadContent(ISpreadDescriptor spread) throws ParserException {
         StringBuilder sb = new StringBuilder("{\n");
 
+
         String inputsToSpreadContent = getInputsToSpreadContent(spread.getInputsToSpread());
         sb.append("\tinputs_to_spread : ").append(inputsToSpreadContent).append("\n");
 
@@ -172,7 +171,7 @@ public class StepWriter {
     }
 
     private String getInputsToSpreadContent(Collection<String> inputsToSpread) {
-        if(inputsToSpread.isEmpty())
+        if(inputsToSpread == null || inputsToSpread.isEmpty())
             return "[ ]";
 
         StringBuilder sb = new StringBuilder("[");

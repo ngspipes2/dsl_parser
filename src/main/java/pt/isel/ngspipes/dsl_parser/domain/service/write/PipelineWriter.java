@@ -30,11 +30,20 @@ public class PipelineWriter {
         String outputs = getOutputsAsString(pipelineDescriptor);
         String steps = getStepsAsString(pipelineDescriptor);
 
-        sb.append(properties).append("\n\n");
-        sb.append(parameters).append("\n\n");
-        sb.append(repositories).append("\n\n");
-        sb.append(outputs).append("\n\n");
-        sb.append(steps);
+        if(!properties.isEmpty())
+            sb.append(properties).append("\n\n");
+
+        if(!parameters.isEmpty())
+            sb.append(parameters).append("\n\n");
+
+        if(!repositories.isEmpty())
+            sb.append(repositories).append("\n\n");
+
+        if(!outputs.isEmpty())
+            sb.append(outputs).append("\n\n");
+
+        if(!steps.isEmpty())
+            sb.append(steps);
 
         return sb.toString();
     }

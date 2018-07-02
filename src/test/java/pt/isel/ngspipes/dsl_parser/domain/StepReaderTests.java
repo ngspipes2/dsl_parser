@@ -35,8 +35,26 @@ public class StepReaderTests {
 
 
     @Test
+    public void noStepsPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/noStepsPrimitive.pipes"));
+
+        Collection<IStepDescriptor> stepsDescriptor = stepService.parse(root.steps(), root);
+
+        assertEquals(0, stepsDescriptor.size());
+    }
+
+    @Test
+    public void emptyStepsPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/emptyStepsPrimitive.pipes"));
+
+        Collection<IStepDescriptor> stepsDescriptor = stepService.parse(root.steps().step(), root);
+
+        assertEquals(0, stepsDescriptor.size());
+    }
+
+    @Test
     public void fullStepTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/fullStep.pipes"));
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/fullStepPrimitive.pipes"));
 
         Collection<IStepDescriptor> stepsDescriptor = stepService.parse(root.steps().step(), root);
 
@@ -110,8 +128,8 @@ public class StepReaderTests {
     }
 
     @Test
-    public void emptyInputsTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/emptyInputs.pipes"));
+    public void emptyInputsPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/emptyInputsPrimitive.pipes"));
 
         Collection<IStepDescriptor> stepsDescriptor = stepService.parse(root.steps().step(), root);
 
@@ -119,8 +137,8 @@ public class StepReaderTests {
     }
 
     @Test
-    public void noInputsTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/noInputs.pipes"));
+    public void noInputsPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/noInputsPrimitive.pipes"));
 
         Collection<IStepDescriptor> stepsDescriptor = stepService.parse(root.steps().step(), root);
 
@@ -128,8 +146,8 @@ public class StepReaderTests {
     }
 
     @Test
-    public void noExecutionContextTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/noExecutionContext.pipes"));
+    public void noExecutionContextPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("stepparser/noExecutionContextPrimitive.pipes"));
 
         Collection<IStepDescriptor> stepsDescriptor = stepService.parse(root.steps().step(), root);
 

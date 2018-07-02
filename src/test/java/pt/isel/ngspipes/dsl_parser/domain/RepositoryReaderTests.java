@@ -14,7 +14,6 @@ import pt.isel.ngspipes.pipeline_descriptor.repository.value.IValueDescriptor;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.LinkedList;
 
 import static junit.framework.TestCase.*;
 
@@ -30,53 +29,49 @@ public class RepositoryReaderTests {
     private RepositoryReader repositoryService = new RepositoryReader();
 
 
+
     @Test(expected = IllegalArgumentException.class)
     public void nullRepositoryContextTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepository.pipes"));
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepositoryPrimitive.pipes"));
 
         repositoryService.parse((PipesParser.RepositoryContext)null, root);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nullRepositoriesContextTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepository.pipes"));
-
-        repositoryService.parse((Collection<PipesParser.RepositoryContext>)null, root);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
     public void parseWithNullContextTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepository.pipes"));
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepositoryPrimitive.pipes"));
 
         repositoryService.parse(root.repositories().repository(0), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void parseAllWithNullContextTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepository.pipes"));
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepositoryPrimitive.pipes"));
 
         repositoryService.parse(root.repositories().repository(), null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void emptyRepositoriesContextTest() throws ParserException, IOException {
-        Collection<IRepositoryDescriptor> repositoriesDescriptor = repositoryService.parse(new LinkedList<>(), null);
+    @Test()
+    public void noRepositoriesPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/noRepositoriesPrimitive.pipes"));
 
-        assertTrue(repositoriesDescriptor.isEmpty());
+        Collection<IRepositoryDescriptor> repositoriesDescriptor = repositoryService.parse(root.repositories(), root);
+
+        assertEquals(0, repositoriesDescriptor.size());
     }
 
     @Test
-    public void nonEmptyRepositoriesContextTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepository.pipes"));
+    public void emptyRepositoriesPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/emptyRepositoriesPrimitive.pipes"));
 
         Collection<IRepositoryDescriptor> repositoriesDescriptor = repositoryService.parse(root.repositories().repository(), root);
 
-        assertEquals(1, repositoriesDescriptor.size());
+        assertEquals(0, repositoriesDescriptor.size());
     }
 
     @Test
-    public void toolRepositoryTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepository.pipes"));
+    public void toolRepositoryPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/toolRepositoryPrimitive.pipes"));
 
         Collection<IRepositoryDescriptor> repositoryDescriptors = repositoryService.parse(root.repositories().repository(), root);
 
@@ -87,13 +82,12 @@ public class RepositoryReaderTests {
         assertTrue(repositoryDescriptor instanceof IToolRepositoryDescriptor);
         assertEquals("repo", repositoryDescriptor.getId());
         assertEquals("https://location", repositoryDescriptor.getLocation());
-        assertNotNull(repositoryDescriptor.getConfiguration());
         assertEquals(0, repositoryDescriptor.getConfiguration().size());
     }
 
     @Test
-    public void pipelineRepositoryTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/pipelineRepository.pipes"));
+    public void pipelineRepositoryPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("repositoryparser/pipelineRepositoryPrimitive.pipes"));
 
         Collection<IRepositoryDescriptor> repositoryDescriptors = repositoryService.parse(root.repositories().repository(), root);
 

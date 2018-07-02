@@ -9,7 +9,6 @@ import pt.isel.ngspipes.pipeline_descriptor.output.IOutputDescriptor;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.LinkedList;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -33,22 +32,26 @@ public class OutputReaderTests {
     }
 
     @Test
-    public void nullOutputsContextTest() throws ParserException, IOException {
-        Collection<IOutputDescriptor> outputDescriptors = outputService.parse((Collection<PipesParser.OutputContext>) null);
+    public void noOutputsPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputparser/noOutputsPrimitive.pipes"));
+
+        Collection<IOutputDescriptor> outputDescriptors = outputService.parse(root.outputs());
+
+        assertEquals(0, outputDescriptors.size());
+    }
+
+    @Test
+    public void emptyOutputsPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputparser/emptyOutputsPrimitive.pipes"));
+
+        Collection<IOutputDescriptor> outputDescriptors = outputService.parse(root.outputs().output());
 
         assertTrue(outputDescriptors.isEmpty());
     }
 
     @Test
-    public void emptyOutputsContextTest() throws ParserException, IOException {
-        Collection<IOutputDescriptor> outputDescriptors = outputService.parse(new LinkedList<>());
-
-        assertTrue(outputDescriptors.isEmpty());
-    }
-
-    @Test
-    public void outputsContextWithOneElementTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputparser/1output.pipes"));
+    public void fullOutputsPrimitiveTest() throws ParserException, IOException {
+        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputparser/fullOutputsPrimitive.pipes"));
 
         Collection<IOutputDescriptor> outputDescriptors = outputService.parse(root.outputs().output());
 
@@ -56,19 +59,8 @@ public class OutputReaderTests {
 
         IOutputDescriptor outputDescriptor = outputDescriptors.stream().findFirst().get();
 
-        assertEquals("output1", outputDescriptor.getName());
-        assertEquals("step1", outputDescriptor.getStepId());
-        assertEquals("outputName", outputDescriptor.getOutputName());
-    }
-
-    @Test
-    public void regularOutputContextTest() throws ParserException, IOException {
-        PipesParser.RootContext root = ParserUtils.getRootContext(readFile("outputparser/1output.pipes"));
-
-        IOutputDescriptor outputDescriptor = outputService.parse(root.outputs().output(0));
-
-        assertEquals("output1", outputDescriptor.getName());
-        assertEquals("step1", outputDescriptor.getStepId());
+        assertEquals("outputId", outputDescriptor.getName());
+        assertEquals("stepId", outputDescriptor.getStepId());
         assertEquals("outputName", outputDescriptor.getOutputName());
     }
 

@@ -3,49 +3,57 @@ package pt.isel.ngspipes.dsl_parser.domain.service.read.property;
 import pt.isel.ngspipes.dsl_parser.domain.ParserUtils;
 import pt.isel.ngspipes.dsl_parser.domain.antlr.PipesParser;
 
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class PropertyReader {
 
-    public String parseAuthor(PipesParser.PropertiesContext properties) {
-        if(properties == null || properties.authorProperty() == null)
-            return null;
+    public Map<String, Object> parse(PipesParser.PropertiesContext properties) {
+        if(properties == null)
+            return new HashMap<>();
 
-        String author = properties.authorProperty().STRING().getText();
-        author = ParserUtils.trimQuotes(author);
+        String author = parseAuthor(properties.authorProperty());
+        String description = parseDescription(properties.descriptionProperty());
+        String version = parseVersion(properties.versionProperty());
+        Collection<String> documentation = parseDocumentation(properties.documentationProperty());
 
-        return author;
+        Map<String, Object> props = new LinkedHashMap<>();
+
+        props.put("author", author);
+        props.put("description", description);
+        props.put("version", version);
+        props.put("documentation", documentation);
+
+        return props;
     }
 
-    public String parseDescription(PipesParser.PropertiesContext properties) {
-        if(properties == null || properties.descriptionProperty() == null)
+    private String parseAuthor(PipesParser.AuthorPropertyContext author) {
+        if(author == null)
             return null;
 
-        String description = properties.descriptionProperty().STRING().getText();
-        description = ParserUtils.trimQuotes(description);
-
-        return description;
+        return ParserUtils.trimQuotes(author.STRING().getText());
     }
 
-    public String parseVersion(PipesParser.PropertiesContext properties) {
-        if(properties == null || properties.authorProperty() == null)
+    private String parseDescription(PipesParser.DescriptionPropertyContext description) {
+        if(description == null)
             return null;
 
-        String version = properties.versionProperty().STRING().getText();
-        version = ParserUtils.trimQuotes(version);
-
-        return version;
+        return ParserUtils.trimQuotes(description.STRING().getText());
     }
 
-    public Collection<String> parseDocumentation(PipesParser.PropertiesContext properties) {
-        if(properties == null || properties.authorProperty() == null)
+    private String parseVersion(PipesParser.VersionPropertyContext version) {
+        if(version == null)
+            return null;
+
+        return ParserUtils.trimQuotes(version.STRING().getText());
+    }
+
+    private Collection<String> parseDocumentation(PipesParser.DocumentationPropertyContext documentation) {
+        if(documentation == null)
             return new LinkedList<>();
 
-
-        return properties.documentationProperty().STRING()
+        return documentation.STRING()
             .stream()
             .map((doc) -> ParserUtils.trimQuotes(doc.getText()))
             .collect(Collectors.toList());

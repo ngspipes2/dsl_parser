@@ -8,16 +8,13 @@ import java.util.Collection;
 public class OutputWriter {
 
     public String getAsString(Collection<IOutputDescriptor> outputs) {
-        if(outputs == null)
-            throw new IllegalArgumentException("Outputs cannot be null!");
-
         String outputContent = getOutputsContent(outputs);
 
         return "Outputs : " + outputContent;
     }
 
     private String getOutputsContent(Collection<IOutputDescriptor> outputs) {
-        if(outputs.isEmpty())
+        if(outputs == null || outputs.isEmpty())
             return "{ }";
 
         StringBuilder sb = new StringBuilder("{\n");

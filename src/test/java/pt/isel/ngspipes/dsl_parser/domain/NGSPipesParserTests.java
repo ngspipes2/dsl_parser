@@ -3,10 +3,13 @@ package pt.isel.ngspipes.dsl_parser.domain;
 import org.junit.Test;
 import pt.isel.ngspipes.dsl_parser.transversal.IO;
 import pt.isel.ngspipes.dsl_parser.transversal.ParserException;
+import pt.isel.ngspipes.pipeline_descriptor.IPipelineDescriptor;
+import pt.isel.ngspipes.pipeline_descriptor.repository.IRepositoryDescriptor;
 
 import java.io.IOException;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertNull;
 
 public class NGSPipesParserTests {
 
@@ -28,19 +31,7 @@ public class NGSPipesParserTests {
 
     @Test(expected = ParserException.class)
     public void invalidRepositoriesTagTest() throws ParserException, IOException {
-        String pipelineDescription = readFile("ngspipesparser/invalidRepositoriesTag.pipes");
-
-        try {
-            parser.getFromString(pipelineDescription);
-        } catch (ParserException e) {
-            assertTrue(e.getMessage().contains("line 1"));
-            throw e;
-        }
-    }
-
-    @Test(expected = ParserException.class)
-    public void emptyRepositoriesTagTest() throws ParserException, IOException {
-        String pipelineDescription = readFile("ngspipesparser/emptyRepositoriesTag.pipes");
+        String pipelineDescription = readFile("ngspipesparser/invalidRepositoriesPrimitive.pipes");
 
         try {
             parser.getFromString(pipelineDescription);
@@ -52,7 +43,7 @@ public class NGSPipesParserTests {
 
     @Test(expected = ParserException.class)
     public void invalidToolRepositoryTagTest() throws ParserException, IOException {
-        String pipelineDescription = readFile("ngspipesparser/invalidToolRepositoryTag.pipes");
+        String pipelineDescription = readFile("ngspipesparser/invalidToolRepositoryPrimitive.pipes");
 
         try {
             parser.getFromString(pipelineDescription);
@@ -64,7 +55,7 @@ public class NGSPipesParserTests {
 
     @Test(expected = ParserException.class)
     public void invalidPipelineRepositoryTagTest() throws ParserException, IOException {
-        String pipelineDescription = readFile("ngspipesparser/invalidPipelineRepositoryTag.pipes");
+        String pipelineDescription = readFile("ngspipesparser/invalidPipelineRepositoryPrimitive.pipes");
 
         try {
             parser.getFromString(pipelineDescription);
@@ -122,21 +113,19 @@ public class NGSPipesParserTests {
         }
     }
 
-    @Test(expected = ParserException.class)
+    @Test
     public void repositoryWithoutLocationTest() throws ParserException, IOException {
         String pipelineDescription = readFile("ngspipesparser/repositoryWithoutLocation.pipes");
 
-        try {
-            parser.getFromString(pipelineDescription);
-        } catch (ParserException e) {
-            assertTrue(e.getMessage().contains("location"));
-            throw e;
-        }
+        IPipelineDescriptor pipeline = parser.getFromString(pipelineDescription);
+        IRepositoryDescriptor repository = pipeline.getRepositories().stream().findFirst().get();
+
+        assertNull(repository.getLocation());
     }
 
     @Test(expected = ParserException.class)
     public void invalidRepositoryLocationTest() throws ParserException, IOException {
-        String pipelineDescription = readFile("ngspipesparser/invalidRepositoryLocationTag.pipes");
+        String pipelineDescription = readFile("ngspipesparser/invalidRepositoryLocationPrimitive.pipes");
 
         try {
             parser.getFromString(pipelineDescription);
@@ -148,7 +137,7 @@ public class NGSPipesParserTests {
 
     @Test(expected = ParserException.class)
     public void invalidRepositoryConfigTest() throws ParserException, IOException {
-        String pipelineDescription = readFile("ngspipesparser/invalidRepositoryConfigTag.pipes");
+        String pipelineDescription = readFile("ngspipesparser/invalidRepositoryConfigPrimitive.pipes");
 
         try {
             parser.getFromString(pipelineDescription);
@@ -160,7 +149,7 @@ public class NGSPipesParserTests {
 
     @Test(expected = ParserException.class)
     public void invalidOutputsTagTest() throws ParserException, IOException {
-        String pipelineDescription = readFile("ngspipesparser/invalidOutputsTag.pipes");
+        String pipelineDescription = readFile("ngspipesparser/invalidOutputsPrimitive.pipes");
 
         try {
             parser.getFromString(pipelineDescription);
@@ -172,7 +161,7 @@ public class NGSPipesParserTests {
 
     @Test(expected = ParserException.class)
     public void invalidStepsTagTest() throws ParserException, IOException {
-        String pipelineDescription = readFile("ngspipesparser/invalidStepsTag.pipes");
+        String pipelineDescription = readFile("ngspipesparser/invalidStepsPrimitive.pipes");
 
         try {
             parser.getFromString(pipelineDescription);

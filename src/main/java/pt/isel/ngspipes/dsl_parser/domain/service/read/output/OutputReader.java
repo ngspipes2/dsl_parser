@@ -10,6 +10,14 @@ import java.util.LinkedList;
 
 public class OutputReader {
 
+
+    public Collection<IOutputDescriptor> parse(PipesParser.OutputsContext outputsContext) {
+        if(outputsContext == null)
+            return new LinkedList<>();
+
+        return parse(outputsContext.output());
+    }
+
     public Collection<IOutputDescriptor> parse(Collection<PipesParser.OutputContext> outputsContext) {
         if(outputsContext == null)
             return new LinkedList<>();
