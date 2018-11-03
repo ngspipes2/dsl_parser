@@ -80,7 +80,7 @@ public class StepReaderTests {
         assertEquals("step2", stepDescriptor.getId());
 
         Collection<IInputDescriptor> inputsDescriptor = stepDescriptor.getInputs();
-        assertEquals(6, inputsDescriptor.size());
+        assertEquals(7, inputsDescriptor.size());
 
         IInputDescriptor inputDescriptor = inputsDescriptor.stream().findFirst().get();
         assertEquals("string", inputDescriptor.getInputName());
@@ -113,6 +113,15 @@ public class StepReaderTests {
         assertTrue(inputDescriptor instanceof IChainInputDescriptor);
         assertEquals("step1", ((IChainInputDescriptor)inputDescriptor).getStepId());
         assertEquals("out", ((IChainInputDescriptor)inputDescriptor).getOutputName());
+
+        inputDescriptor = inputsDescriptor.stream().skip(6).findFirst().get();
+        assertEquals("array", inputDescriptor.getInputName());
+        assertTrue(inputDescriptor instanceof ISimpleInputDescriptor);
+        assertTrue(((ISimpleInputDescriptor)inputDescriptor).getValue() instanceof Collection);
+
+        Collection<?> array = ((Collection)((ISimpleInputDescriptor)inputDescriptor).getValue());
+        assertEquals("str", array.stream().findFirst().get());
+        assertEquals(1, array.stream().skip(1).findFirst().get());
 
         assertEquals(2, stepDescriptor.getSpread().getInputsToSpread().size());
         assertEquals("ch1", stepDescriptor.getSpread().getInputsToSpread().stream().findFirst().get());

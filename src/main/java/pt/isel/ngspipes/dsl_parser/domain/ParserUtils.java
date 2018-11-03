@@ -116,13 +116,30 @@ public class ParserUtils {
     public static String getValueAsString(IValueDescriptor valueDescriptor) throws ParserException {
         if(valueDescriptor instanceof IParameterValueDescriptor)
             return "params." + ((IParameterValueDescriptor)valueDescriptor).getParameterName();
-        else if (valueDescriptor instanceof ISimpleValueDescriptor)
-            if(((ISimpleValueDescriptor) valueDescriptor).getValue() instanceof String)
-                return ParserUtils.embrace(((ISimpleValueDescriptor) valueDescriptor).getValue().toString());
-            else
-                return ((ISimpleValueDescriptor) valueDescriptor).getValue().toString();
+        else if (valueDescriptor instanceof ISimpleValueDescriptor) {
+            Object value = ((ISimpleValueDescriptor) valueDescriptor).getValue();
+            return ParserUtils.getObjectObjectAsString(value);
+        }
 
         throw new ParserException("Unknown Value Descriptor type!");
+    }
+
+    public static String getObjectObjectAsString(Object value) {
+        if(value instanceof String)
+            return ParserUtils.embrace(value.toString());
+        else if(value instanceof Collection) {
+            String str = "[";
+
+            for(Object o : (Collection<?>)value)
+                str += getObjectObjectAsString(o) + ",";
+
+            if(str.length() > "[".length())
+                str = str.substring(0, str.length()-",".length());
+
+            return str + "]";
+        }
+
+        return value.toString();
     }
 
     public static String trimQuotes(String description) {

@@ -143,11 +143,7 @@ public class StepWriter {
             return stepId + "[" + outputName + "]";
         } else if(input instanceof ISimpleInputDescriptor) {
             Object value = ((ISimpleInputDescriptor) input).getValue();
-
-            if(value instanceof String)
-                return ParserUtils.embrace(value.toString());
-            else
-                return value.toString();
+            return ParserUtils.getObjectObjectAsString(value);
         }
 
         throw new ParserException("Unknown input type!");

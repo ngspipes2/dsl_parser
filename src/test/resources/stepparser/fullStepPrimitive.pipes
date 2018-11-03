@@ -42,6 +42,7 @@ Steps : [
         param: params.param
         ch1: step0[out]
         ch2: step1[out]
+        array: ["str", 1]
     }
     spread: {
         inputs_to_spread: [ch1, ch2]
