@@ -169,7 +169,10 @@ public class StepReader {
             return null;
 
         Collection<String> inputsToSpread = parseInputsToSpread(context, spreadPropertyContext.spreadInputsToSpreadProperty());
-        ICombineStrategyDescriptor strategy = parseCombineStrategy(context, spreadPropertyContext.spreadStrategyProperty().combineStrategy());
+        ICombineStrategyDescriptor strategy = null;
+
+        if(spreadPropertyContext.spreadStrategyProperty() != null)
+            strategy = parseCombineStrategy(context, spreadPropertyContext.spreadStrategyProperty().combineStrategy());
 
         return new SpreadDescriptor(inputsToSpread, strategy);
     }
