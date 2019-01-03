@@ -36,7 +36,7 @@ public class PropertyWriter {
             for(String doc : pipeline.getDocumentation())
                 sb.append(ParserUtils.embrace(doc)).append(", ");
 
-            if(!pipeline.getDescription().isEmpty())
+            if(!pipeline.getDocumentation().isEmpty())
                 sb.replace(sb.length()-", ".length(), sb.length(), "");
 
             sb.append("]\n");
